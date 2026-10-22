@@ -1,0 +1,7 @@
+Verifica locale 19/09/2026
+node --test test.cjs: 7 test superati, 0 falliti.
+node --check: tutti i file JavaScript validi.
+manifest.json: JSON valido, Manifest V3.
+DOM autentico: griglia, ASIN, titolo, selezione potluck e conteggio osservati.
+Installazione, GET automatico e notifiche di sistema: non provati dal vivo.
+Stato: pronto, NON attivo.

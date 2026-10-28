@@ -39,9 +39,9 @@ La WebView carica la coda potluck; Amazon reindirizza al sign-in. Quando l'URL t
 ## Scheduler
 
 - Foreground service di tipo `specialUse` (`dataSync` su Android 15 si ferma dopo 6 h/24 h; `shortService` dura 3 minuti), con notifica fissa di stato.
-- Ciclo in coroutine: scansione, poi attesa casuale uniforme tra min e max minuti (impostabile 1–3, predefinito 1–3), estratta di nuovo prima di ogni controllo (`Monitor.delayMs`). `PARTIAL_WAKE_LOCK` riacquisito a ogni giro con timeout 70 s, così non resta mai bloccato.
+- Ciclo in coroutine: scansione, poi attesa casuale uniforme tra min e max minuti (impostabile 1–3, predefinito 1–3), estratta di nuovo prima di ogni controllo (`Monitor.delayMs`). `PARTIAL_WAKE_LOCK` tenuto anche durante l'attesa (riacquisito a ogni giro con timeout attesa + 70 s): a schermo spento senza wake lock la CPU dorme e l'attesa non scade; il timeout evita che resti bloccato.
 - Al primo Avvia: richiesta di `POST_NOTIFICATIONS` ed esenzione dall'ottimizzazione batteria. Sui telefoni Xiaomi/Samsung/OnePlus/Huawei serve anche l'avvio automatico (dontkillmyapp.com).
-- Nessun `BOOT_COMPLETED`: dopo riavvio o chiusura forzata lo stato diventa "Fermo… Premi Avvia", come in Chrome.
+- Servizio `START_STICKY`: se il sistema lo chiude in standby viene ricreato e riprende solo se lo stato salvato è ancora "attivo". Nessun `BOOT_COMPLETED`: dopo un riavvio riprende all'apertura dell'app.
 - Intervallo reale: 60 s a schermo acceso o in carica; 60–120 s a schermo spento con le esenzioni, senza garanzia; da 15 min a ore senza esenzioni. La UI dice "circa ogni minuto" e mostra l'ultimo controllo.
 - Dopo l'MVP: fallback WorkManager ogni 15 min se l'utente rifiuta l'esenzione.
 

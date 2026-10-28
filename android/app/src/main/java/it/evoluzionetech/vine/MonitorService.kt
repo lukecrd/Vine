@@ -45,8 +45,13 @@ class MonitorService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         val n = statusNotification("Lettura in corso…")
-        if (Build.VERSION.SDK_INT >= 34) startForeground(ONGOING, n, ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE)
-        else startForeground(ONGOING, n)
+        try {
+            if (Build.VERSION.SDK_INT >= 34) startForeground(ONGOING, n, ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE)
+            else startForeground(ONGOING, n)
+        } catch (e: IllegalStateException) { // sticky restart refused in background (no battery exemption): the UI resumes it on open
+            stopSelf()
+            return START_NOT_STICKY
+        }
         if (loop?.isActive != true) loop = scope.launch {
             val m = monitor(this@MonitorService)
             while (true) {
@@ -65,15 +70,14 @@ class MonitorService : Service() {
                             .build(),
                     )
                     break
-                } finally {
-                    if (wakeLock.isHeld) wakeLock.release()
                 }
                 getSystemService(NotificationManager::class.java).notify(ONGOING, statusNotification(m.state().status))
+                wakeLock.acquire(wait + 70_000) // held through the pause too: with the screen off the CPU sleeps and delay never fires
                 delay(wait)
             }
             stopSelf()
         }
-        return START_NOT_STICKY // after a kill the UI shows "Fermo", resume is manual
+        return START_STICKY // recreated after a kill in standby; scan() stops it again if the saved state is no longer running
     }
 
     override fun onDestroy() {

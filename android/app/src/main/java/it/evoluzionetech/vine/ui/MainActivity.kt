@@ -124,10 +124,8 @@ class MainActivity : ComponentActivity() {
         var now by remember { mutableLongStateOf(System.currentTimeMillis()) }
         val service = Intent(this, MonitorService::class.java)
 
-        // No BOOT_COMPLETED and no sticky restart: a "running" state without a live service is stale.
-        LaunchedEffect(Unit) {
-            monitor.update { if (it.running && !MonitorService.alive) it.copy(running = false, status = "Fermo dopo riavvio o chiusura dell'app. Premi Avvia.") else it }
-        }
+        // No BOOT_COMPLETED: a "running" state without a live service (reboot, kill not yet restarted) resumes on open.
+        LaunchedEffect(Unit) { if (monitor.state().running && !MonitorService.alive) startForegroundService(service) }
         // Drives "prossimo controllo tra ~X" and refreshes system settings shown on screen.
         LaunchedEffect(Unit) { while (true) { delay(1_000); now = System.currentTimeMillis() } }
 

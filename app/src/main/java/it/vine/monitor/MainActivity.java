@@ -9,11 +9,8 @@ import android.os.*;
 import android.provider.Settings;
 import android.webkit.*;
 import android.widget.LinearLayout;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.app.NotificationCompat;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
     private WebView uiWebView, amazonWebView;
     private SharedPreferences prefs;
     private static final String ALERT_CHANNEL = "vine_new_product";
@@ -26,8 +23,8 @@ public class MainActivity extends AppCompatActivity {
         prefs = getSharedPreferences("vine_storage", MODE_PRIVATE);
         NotificationChannel ch = new NotificationChannel(ALERT_CHANNEL, "Nuovi Prodotti Vine", NotificationManager.IMPORTANCE_HIGH);
         getSystemService(NotificationManager.class).createNotificationChannel(ch);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.POST_NOTIFICATIONS}, 101);
+        if (Build.VERSION.SDK_INT >= 33 && checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS}, 101);
         }
         PowerManager pm = (PowerManager) getSystemService(POWER_SERVICE);
         if (!pm.isIgnoringBatteryOptimizations(getPackageName())) {
@@ -103,9 +100,13 @@ public class MainActivity extends AppCompatActivity {
         }
         @JavascriptInterface public void notifyProduct(String id, String title, String url) {
             PendingIntent pi = PendingIntent.getActivity(MainActivity.this, id.hashCode(), new Intent(Intent.ACTION_VIEW, Uri.parse(url)), PendingIntent.FLAG_IMMUTABLE);
-            Notification n = new NotificationCompat.Builder(MainActivity.this, ALERT_CHANNEL)
-                    .setSmallIcon(android.R.drawable.ic_dialog_info).setContentTitle("Nuovo prodotto Vine")
-                    .setContentText(title).setPriority(NotificationCompat.PRIORITY_HIGH).setAutoCancel(true).setContentIntent(pi).build();
+            Notification n = new Notification.Builder(MainActivity.this, ALERT_CHANNEL)
+                    .setSmallIcon(android.R.drawable.ic_dialog_info)
+                    .setContentTitle("Nuovo prodotto Vine")
+                    .setContentText(title)
+                    .setAutoCancel(true)
+                    .setContentIntent(pi)
+                    .build();
             getSystemService(NotificationManager.class).notify(id.hashCode(), n);
         }
         @JavascriptInterface public String handleMessage(String type) {

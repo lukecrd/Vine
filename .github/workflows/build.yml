@@ -15,38 +15,38 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Set up JDK 17
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
+      - name: Prepara file dalla cartella principale per l'APK
+        run: |
+          mkdir -p app/src/main/assets
+          cp -f *.js *.html *.css *.png app/src/main/assets/ 2>/dev/null || true
 
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v3
-        with:
-          gradle-version: '8.5'
+      - name: Installa Gradle 8.5 e compila APK
+        run: |
+          curl -sL https://services.gradle.org/distributions/gradle-8.5-bin.zip -o gradle.zip
+          unzip -q gradle.zip
+          ./gradle-8.5/bin/gradle assembleDebug --no-daemon --stacktrace
 
-      - name: Build Debug APK
-        run: gradle assembleDebug --stacktrace
-
-      - name: Copia APK nella cartella principale del repository
+      - name: Salva VineMonitor.apk nel repository e nelle Releases
         run: |
           cp app/build/outputs/apk/debug/app-debug.apk VineMonitor.apk
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add -f VineMonitor.apk
-          git commit -m "Generato VineMonitor.apk pronto da scaricare" || true
+          git commit -m "Build automatica VineMonitor.apk" || true
           git push
 
-      - name: Upload APK in Actions
+      - name: Upload APK in Actions Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: VineMonitor-APK
           path: VineMonitor.apk
 
-      - name: Pubblica APK in GitHub Releases
+      - name: Crea Release con APK
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v1.1.0

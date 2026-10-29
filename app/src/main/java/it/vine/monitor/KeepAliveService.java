@@ -2,7 +2,6 @@
 import android.app.*;
 import android.content.Intent;
 import android.os.*;
-import androidx.core.app.NotificationCompat;
 
 public class KeepAliveService extends Service {
     private static final String CHANNEL_ID = "vine_keep_alive";
@@ -21,11 +20,13 @@ public class KeepAliveService extends Service {
         if (!wakeLock.isHeld()) wakeLock.acquire();
         Intent openIntent = new Intent(this, MainActivity.class);
         PendingIntent pi = PendingIntent.getActivity(this, 0, openIntent, PendingIntent.FLAG_IMMUTABLE);
-        Notification n = new NotificationCompat.Builder(this, CHANNEL_ID)
+        Notification n = new Notification.Builder(this, CHANNEL_ID)
                 .setContentTitle("Vine — Monitoraggio attivo")
                 .setContentText("Attivo anche in standby (ogni 60s)")
                 .setSmallIcon(android.R.drawable.ic_popup_sync)
-                .setOngoing(true).setContentIntent(pi).build();
+                .setOngoing(true)
+                .setContentIntent(pi)
+                .build();
         startForeground(1, n);
         return START_STICKY;
     }

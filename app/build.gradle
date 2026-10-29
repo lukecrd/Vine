@@ -1,4 +1,6 @@
-﻿plugins { id 'com.android.application' }
+plugins {
+    id 'com.android.application'
+}
 android {
     namespace 'it.vine.monitor'
     compileSdk 34

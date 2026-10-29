@@ -1,4 +1,4 @@
-﻿name: Build Vine Monitor APK
+name: Build Vine Monitor APK
 on:
   push:
     paths-ignore:
@@ -20,18 +20,21 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Prepara file dalla cartella principale per l'APK
+      - name: Prepara assets dalla cartella principale
         run: |
           mkdir -p app/src/main/assets
-          cp -f *.js *.html *.css *.png app/src/main/assets/ 2>/dev/null || true
+          for f in core.js popup.html popup.js style.css android-shim.js icon.png; do
+            if [ -f "$f" ]; then cp "$f" app/src/main/assets/; fi
+          done
 
-      - name: Installa Gradle 8.5 e compila APK
+      - name: Compila APK con Gradle
         run: |
+          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses > /dev/null || true
           curl -sL https://services.gradle.org/distributions/gradle-8.5-bin.zip -o gradle.zip
           unzip -q gradle.zip
           ./gradle-8.5/bin/gradle assembleDebug --no-daemon --stacktrace
 
-      - name: Salva VineMonitor.apk nel repository e nelle Releases
+      - name: Salva VineMonitor.apk nel repository
         run: |
           cp app/build/outputs/apk/debug/app-debug.apk VineMonitor.apk
           git config user.name "github-actions[bot]"

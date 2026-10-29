@@ -1,0 +1,314 @@
+[
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/drawable-ldpi-v4_ic_call_decline_low.png.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/drawable-ldpi-v4/ic_call_decline_low.png"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/xml_data_extraction_rules.xml.flat",
+        "source": "it.evoluzionetech.vine.app-main-45:/xml/data_extraction_rules.xml"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/drawable-ldpi-v4_ic_call_answer_video.png.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/drawable-ldpi-v4/ic_call_answer_video.png"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/drawable-xhdpi-v4_notification_bg_low_normal.9.png.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/drawable-xhdpi-v4/notification_bg_low_normal.9.png"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/drawable-hdpi-v4_notification_oversize_large_icon_bg.png.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/drawable-hdpi-v4/notification_oversize_large_icon_bg.png"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/drawable-anydpi-v21_ic_call_decline.xml.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/drawable-anydpi-v21/ic_call_decline.xml"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/drawable-anydpi-v21_ic_call_answer_video.xml.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/drawable-anydpi-v21/ic_call_answer_video.xml"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/color_vector_tint_color.xml.flat",
+        "source": "it.evoluzionetech.vine.app-ui-release-16:/color/vector_tint_color.xml"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/drawable_notification_icon_background.xml.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/drawable/notification_icon_background.xml"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/drawable-anydpi-v21_ic_call_answer_video_low.xml.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/drawable-anydpi-v21/ic_call_answer_video_low.xml"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/drawable-xhdpi-v4_notification_bg_low_pressed.9.png.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/drawable-xhdpi-v4/notification_bg_low_pressed.9.png"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/drawable-xxxhdpi-v4_ic_call_answer_video.png.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/drawable-xxxhdpi-v4/ic_call_answer_video.png"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/drawable-xxxhdpi-v4_ic_call_answer.png.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/drawable-xxxhdpi-v4/ic_call_answer.png"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/drawable-xhdpi-v4_ic_call_decline.png.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/drawable-xhdpi-v4/ic_call_decline.png"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/drawable-mdpi-v4_notification_bg_low_pressed.9.png.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/drawable-mdpi-v4/notification_bg_low_pressed.9.png"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/drawable-anydpi-v21_ic_call_answer.xml.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/drawable-anydpi-v21/ic_call_answer.xml"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/layout-v21_notification_template_icon_group.xml.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/layout-v21/notification_template_icon_group.xml"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/drawable-mdpi-v4_ic_call_decline_low.png.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/drawable-mdpi-v4/ic_call_decline_low.png"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/drawable-hdpi-v4_notify_panel_notification_icon_bg.png.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/drawable-hdpi-v4/notify_panel_notification_icon_bg.png"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/drawable-hdpi-v4_notification_bg_normal_pressed.9.png.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/drawable-hdpi-v4/notification_bg_normal_pressed.9.png"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/drawable-xhdpi-v4_ic_call_answer_low.png.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/drawable-xhdpi-v4/ic_call_answer_low.png"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/drawable-mdpi-v4_ic_call_answer.png.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/drawable-mdpi-v4/ic_call_answer.png"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/drawable-xhdpi-v4_ic_call_answer_video.png.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/drawable-xhdpi-v4/ic_call_answer_video.png"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/drawable-mdpi-v4_notification_bg_low_normal.9.png.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/drawable-mdpi-v4/notification_bg_low_normal.9.png"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/drawable-xxhdpi-v4_ic_call_answer.png.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/drawable-xxhdpi-v4/ic_call_answer.png"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/drawable_notification_tile_bg.xml.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/drawable/notification_tile_bg.xml"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/layout_custom_dialog.xml.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/layout/custom_dialog.xml"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/drawable-ldpi-v4_ic_call_answer_video_low.png.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/drawable-ldpi-v4/ic_call_answer_video_low.png"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/drawable-hdpi-v4_ic_call_answer_video_low.png.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/drawable-hdpi-v4/ic_call_answer_video_low.png"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/drawable-xhdpi-v4_ic_call_answer_video_low.png.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/drawable-xhdpi-v4/ic_call_answer_video_low.png"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/drawable-mdpi-v4_ic_call_answer_low.png.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/drawable-mdpi-v4/ic_call_answer_low.png"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/layout-v21_notification_template_custom_big.xml.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/layout-v21/notification_template_custom_big.xml"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/drawable-xhdpi-v4_ic_call_decline_low.png.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/drawable-xhdpi-v4/ic_call_decline_low.png"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/layout-v21_notification_action_tombstone.xml.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/layout-v21/notification_action_tombstone.xml"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/drawable-ldpi-v4_ic_call_answer.png.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/drawable-ldpi-v4/ic_call_answer.png"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/drawable-xxxhdpi-v4_ic_call_decline_low.png.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/drawable-xxxhdpi-v4/ic_call_decline_low.png"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/drawable-xhdpi-v4_notification_bg_normal_pressed.9.png.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/drawable-xhdpi-v4/notification_bg_normal_pressed.9.png"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/drawable-xxxhdpi-v4_ic_call_answer_low.png.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/drawable-xxxhdpi-v4/ic_call_answer_low.png"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/mipmap_ic_launcher.png.flat",
+        "source": "it.evoluzionetech.vine.app-main-45:/mipmap/ic_launcher.png"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/drawable-hdpi-v4_notification_bg_low_normal.9.png.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/drawable-hdpi-v4/notification_bg_low_normal.9.png"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/drawable-hdpi-v4_ic_call_answer.png.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/drawable-hdpi-v4/ic_call_answer.png"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/xml_network_security_config.xml.flat",
+        "source": "it.evoluzionetech.vine.app-main-45:/xml/network_security_config.xml"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/drawable_notification_bg_low.xml.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/drawable/notification_bg_low.xml"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/color_vector_tint_theme_color.xml.flat",
+        "source": "it.evoluzionetech.vine.app-ui-release-16:/color/vector_tint_theme_color.xml"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/layout_ime_secondary_split_test_activity.xml.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/layout/ime_secondary_split_test_activity.xml"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/drawable-xxhdpi-v4_ic_call_answer_video.png.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/drawable-xxhdpi-v4/ic_call_answer_video.png"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/drawable-mdpi-v4_ic_call_answer_video.png.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/drawable-mdpi-v4/ic_call_answer_video.png"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/drawable-anydpi-v21_ic_call_decline_low.xml.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/drawable-anydpi-v21/ic_call_decline_low.xml"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/drawable-xxhdpi-v4_ic_call_answer_video_low.png.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/drawable-xxhdpi-v4/ic_call_answer_video_low.png"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/drawable-mdpi-v4_notify_panel_notification_icon_bg.png.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/drawable-mdpi-v4/notify_panel_notification_icon_bg.png"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/drawable-xhdpi-v4_notification_bg_normal.9.png.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/drawable-xhdpi-v4/notification_bg_normal.9.png"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/drawable-anydpi-v21_ic_call_answer_low.xml.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/drawable-anydpi-v21/ic_call_answer_low.xml"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/drawable-hdpi-v4_ic_call_answer_video.png.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/drawable-hdpi-v4/ic_call_answer_video.png"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/drawable-mdpi-v4_ic_call_answer_video_low.png.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/drawable-mdpi-v4/ic_call_answer_video_low.png"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/drawable_notification_bg.xml.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/drawable/notification_bg.xml"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/drawable-mdpi-v4_ic_call_decline.png.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/drawable-mdpi-v4/ic_call_decline.png"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/drawable-xxxhdpi-v4_ic_call_answer_video_low.png.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/drawable-xxxhdpi-v4/ic_call_answer_video_low.png"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/drawable-v21_notification_action_background.xml.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/drawable-v21/notification_action_background.xml"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/drawable-mdpi-v4_notification_bg_normal.9.png.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/drawable-mdpi-v4/notification_bg_normal.9.png"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/drawable-hdpi-v4_ic_call_answer_low.png.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/drawable-hdpi-v4/ic_call_answer_low.png"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/layout-v21_notification_action.xml.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/layout-v21/notification_action.xml"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/drawable-ldpi-v4_ic_call_answer_low.png.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/drawable-ldpi-v4/ic_call_answer_low.png"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/drawable-xxxhdpi-v4_ic_call_decline.png.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/drawable-xxxhdpi-v4/ic_call_decline.png"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/drawable-mdpi-v4_notification_bg_normal_pressed.9.png.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/drawable-mdpi-v4/notification_bg_normal_pressed.9.png"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/drawable-hdpi-v4_ic_call_decline_low.png.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/drawable-hdpi-v4/ic_call_decline_low.png"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/drawable-hdpi-v4_ic_call_decline.png.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/drawable-hdpi-v4/ic_call_decline.png"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/drawable-hdpi-v4_notification_bg_normal.9.png.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/drawable-hdpi-v4/notification_bg_normal.9.png"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/drawable-xhdpi-v4_ic_call_answer.png.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/drawable-xhdpi-v4/ic_call_answer.png"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/layout_notification_template_part_chronometer.xml.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/layout/notification_template_part_chronometer.xml"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/drawable-xxhdpi-v4_ic_call_decline_low.png.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/drawable-xxhdpi-v4/ic_call_decline_low.png"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/drawable-ldpi-v4_ic_call_decline.png.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/drawable-ldpi-v4/ic_call_decline.png"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/layout_notification_template_part_time.xml.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/layout/notification_template_part_time.xml"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/drawable_ic_stat.xml.flat",
+        "source": "it.evoluzionetech.vine.app-main-45:/drawable/ic_stat.xml"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/drawable-hdpi-v4_notification_bg_low_pressed.9.png.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/drawable-hdpi-v4/notification_bg_low_pressed.9.png"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/layout_ime_base_split_test_activity.xml.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/layout/ime_base_split_test_activity.xml"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/drawable-xhdpi-v4_notify_panel_notification_icon_bg.png.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/drawable-xhdpi-v4/notify_panel_notification_icon_bg.png"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/drawable-xxhdpi-v4_ic_call_decline.png.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/drawable-xxhdpi-v4/ic_call_decline.png"
+    },
+    {
+        "merged": "it.evoluzionetech.vine.app-release-44:/drawable-xxhdpi-v4_ic_call_answer_low.png.flat",
+        "source": "it.evoluzionetech.vine.app-core-1.13.1-4:/drawable-xxhdpi-v4/ic_call_answer_low.png"
+    }
+]

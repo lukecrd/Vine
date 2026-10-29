@@ -1,0 +1,19 @@
+{
+    "logs": [
+        {
+            "outputFile": "it.evoluzionetech.vine.app-mergeReleaseResources-41:/values-v30/values-v30.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\Luca\\.gradle\\caches\\9.2.0\\transforms\\a0b363be57532596b95a10cd17a66c2c\\workspace\\transformed\\material3-release\\res\\values-v30\\values-v30.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "72",
+                        "endOffsets": "123"
+                    }
+                }
+            ]
+        }
+    ]
+}

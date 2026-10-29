@@ -1,0 +1,25 @@
+﻿plugins { id 'com.android.application' }
+android {
+    namespace 'it.vine.monitor'
+    compileSdk 34
+    defaultConfig {
+        applicationId "it.vine.monitor"
+        minSdk 26
+        targetSdk 34
+        versionCode 1
+        versionName "1.1.0"
+    }
+    sourceSets {
+        main {
+            assets.srcDirs = ['..']
+            assets.excludes = ['app/**', '.git/**', '.github/**', 'build/**', '.gradle/**', '.build-tools/**']
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+}

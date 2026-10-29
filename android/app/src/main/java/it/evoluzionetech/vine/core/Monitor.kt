@@ -3,6 +3,7 @@ package it.evoluzionetech.vine.core
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import java.io.IOException
 import kotlin.random.Random
 
 /**
@@ -52,15 +53,20 @@ class Monitor(
         it.copy(running = false, baseline = false, seen = emptyMap(), events = emptyList(), status = "Dati cancellati. Premi Avvia per una nuova baseline silenziosa.")
     }
 
-    /** Returns the wait before the next check, or null when stopped or suspended (no automatic retry). */
+    /** Returns the wait before the next check, or null when stopped or suspended (no automatic retry, except network errors). */
     suspend fun scan(): Long? = mutex.withLock {
         var s = load()
         if (!s.running) return@withLock null
         try {
-            val items = Reader.scanAll(fetch)
-            val wasBaseline = s.baseline
             val t = now()
             val wait = delayMs(s.minMinutes, s.maxMinutes, random)
+            val items = try {
+                Reader.scanAll(fetch)
+            } catch (e: IOException) { // no network in standby (Wi-Fi asleep, DNS, timeout): stay active, retry next check
+                save(s.copy(next = t + wait, status = "Attivo — rete non disponibile (${e.message ?: e.javaClass.simpleName}), nuovo tentativo al prossimo controllo."))
+                return@withLock wait
+            }
+            val wasBaseline = s.baseline
             val (next, fresh) = VineCore.reconcile(s, items, t)
             s = next.copy(next = t + wait, status = if (wasBaseline) "Attivo — ultima scansione completata." else "Attivo — baseline silenziosa salvata.")
             // Persist events AND seen atomically before system alerts. Alerts are never replayed on restart.

@@ -2,16 +2,17 @@ package it.evoluzionetech.vine.core
 
 import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.withTimeout
+import java.io.IOException
 import java.net.SocketTimeoutException
 
 /** GET only, ported from reader.js. [fetch] returns the body of a 2xx response or throws. */
 object Reader {
     suspend fun scanAll(fetch: suspend (String) -> String, timeoutMs: Long = 40_000): List<Item> = try {
         withTimeout(timeoutMs) { pages(fetch) }
-    } catch (e: TimeoutCancellationException) {
-        error("Rete lenta: scansione interrotta dopo 40 secondi.")
+    } catch (e: TimeoutCancellationException) { // IOException: a network problem, retried by Monitor.scan
+        throw IOException("Rete lenta: scansione interrotta dopo 40 secondi.")
     } catch (e: SocketTimeoutException) { // blocking socket timeout can surface instead of the coroutine one
-        error("Rete lenta: scansione interrotta dopo 40 secondi.")
+        throw IOException("Rete lenta: scansione interrotta dopo 40 secondi.")
     }
 
     private suspend fun pages(fetch: suspend (String) -> String): List<Item> {

@@ -13,6 +13,7 @@ class MonitorTest {
     private var saved: String? = null // JSON, like the DataStore file
     private var html = page()
     private var failure: String? = null
+    private var offline = false
     private val notified = mutableListOf<Event>()
     private var alerts = true
     private var clock = 0L
@@ -22,7 +23,7 @@ class MonitorTest {
     private val monitor = Monitor(
         load = { load() },
         save = { saved = Json.encodeToString(State.serializer(), it) },
-        fetch = { failure?.let { error(it) } ?: html },
+        fetch = { if (offline) throw java.net.UnknownHostException("www.amazon.it"); failure?.let { error(it) } ?: html },
         notify = { e ->
             // Saved before alerting: the event is already in the persisted log.
             assertTrue(load().events.any { it.id == e.id && it.at == e.at })
@@ -66,6 +67,22 @@ class MonitorTest {
         monitor.stop("Fermo — memoria dei prodotti conservata.")
         assertFalse(load().running)
         assertEquals(2, load().seen.size)
+    }
+
+    @Test fun `rete assente in standby non sospende, riprova al controllo successivo`() = runBlocking {
+        monitor.start()
+        monitor.scan()
+        val before = load()
+        offline = true
+        val wait = monitor.scan()!!
+        assertTrue(load().running)
+        assertEquals(before.seen, load().seen)
+        assertEquals(clock + wait, load().next)
+        assertTrue(load().status.startsWith("Attivo — rete non disponibile"))
+        offline = false
+        html = page(listOf(A, B))
+        monitor.scan()
+        assertEquals(listOf(B.id), notified.map { it.id })
     }
 
     @Test fun `sospensione non aggiorna i gia visti`() = runBlocking {

@@ -65,7 +65,7 @@ class ReaderTest {
         val slow: suspend (String) -> String = { delay(5_000); site.fetch(it) }
         assertEquals(
             "Rete lenta: scansione interrotta dopo 40 secondi.",
-            assertThrows(IllegalStateException::class.java) { runBlocking { Reader.scanAll(slow, timeoutMs = 50) } }.message,
+            assertThrows(java.io.IOException::class.java) { runBlocking { Reader.scanAll(slow, timeoutMs = 50) } }.message,
         )
     }
 }

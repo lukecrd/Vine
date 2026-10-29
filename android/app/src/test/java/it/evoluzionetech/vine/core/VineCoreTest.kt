@@ -37,7 +37,7 @@ class VineCoreTest {
             page(blocked = true) to "Accesso o CAPTCHA richiesto. Intervento manuale necessario.",
             page().replace("<p>", "<form action=\"/errors/validateCaptcha\"></form><p>") to "Accesso o CAPTCHA richiesto. Intervento manuale necessario.",
             page(selected = false) to "Pagina non riconosciuta: sessione, blocco o struttura cambiata.",
-            page(count = "Errore") to "Conteggio risultati non verificabile (anche pagina vuota): monitor sospeso. Testo letto: «Errore»",
+            page(count = "Errore") to "Conteggio risultati non verificabile: monitor sospeso. Testo letto: «Errore»",
             page(count = "Visualizzazione di 1–2 di 2 risultati") to "Conteggio prodotti incoerente.",
             page(listOf(A, A), "Visualizzazione di 1–2 di 2 risultati") to "Conteggio prodotti incoerente.",
             page(count = "Visualizzazione di 3–3 di 2 risultati") to "Intervallo risultati incoerente.",
@@ -52,6 +52,15 @@ class VineCoreTest {
 
     @Test fun `pagina vuota con conteggio zero esplicito supportata`() {
         assertEquals(0L, VineCore.read(page(emptyList(), "Visualizzazione di 0–0 di 0 risultati"), T).total)
+    }
+
+    @Test fun `coda vuota senza conteggio o senza griglia riconosciuta`() {
+        val empty = page(emptyList(), "Al momento non ci sono articoli")
+        assertEquals(0L, VineCore.read(empty, T).total)
+        assertEquals(0L, VineCore.read(empty.replace("vvp-items-grid-container", "altro"), T).total)
+        // Still not recognized: wrong tab, or tiles without a count.
+        assertThrows(IllegalStateException::class.java) { VineCore.read(page(emptyList(), "x", selected = false), T) }
+        assertThrows(IllegalStateException::class.java) { VineCore.read(page(count = "x"), T) }
     }
 
     @Test fun `numeri con separatore delle migliaia`() {

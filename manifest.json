@@ -1,9 +1,9 @@
-{
+﻿{
   "manifest_version": 3,
   "name": "Vine — nuovi prodotti",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Monitor locale della coda Consigliati per te. Solo lettura e notifiche, ogni 60 secondi.",
-  "permissions": ["storage", "alarms", "notifications"],
+  "permissions": ["storage", "alarms", "notifications", "power"],
   "host_permissions": ["https://www.amazon.it/vine/*"],
   "background": {"service_worker": "background.js"},
   "action": {"default_title": "Vine monitor", "default_popup": "popup.html"},

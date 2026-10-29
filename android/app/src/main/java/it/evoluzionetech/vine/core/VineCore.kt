@@ -66,13 +66,17 @@ object VineCore {
         val doc = Jsoup.parse(html, url)
         if (doc.selectFirst("input[type=\"password\"], #captchacharacters, form[action*=\"validateCaptcha\"], iframe[src*=\"captcha\"]") != null)
             error("Accesso o CAPTCHA richiesto. Intervento manuale necessario.")
-        val selected = doc.selectFirst("#vvp-items-button--recommended [aria-checked=\"true\"]")
+        doc.selectFirst("#vvp-items-button--recommended [aria-checked=\"true\"]")
+            ?: error("Pagina non riconosciuta: sessione, blocco o struttura cambiata.")
         val box = doc.selectFirst("#vvp-items-grid-container")
-        if (selected == null || box == null) error("Pagina non riconosciuta: sessione, blocco o struttura cambiata.")
-        val summary = box.findAll("p").joinToString(" ") { it.wholeText() }
-        // Empty-state wording is intentionally NOT guessed. Unknown empty layouts pause safely.
+        val summary = box?.findAll("p")?.joinToString(" ") { it.wholeText() } ?: ""
+        val match = COUNT.find(summary)
+        // Empty queue: Amazon drops the count (and maybe the grid). Wording is not guessed: logged-in potluck tab with
+        // no tile at all means 0. Harmless if wrong: nothing is notified and the seen ASINs are kept.
+        if (match == null && doc.selectFirst(".vvp-item-tile") == null) return Snapshot(emptyList(), 0, 0, 0)
+        if (box == null) error("Pagina non riconosciuta: sessione, blocco o struttura cambiata.")
         // Shows the unmatched text so a changed Amazon wording can be fixed without guessing.
-        val count = COUNT.find(summary) ?: error("Conteggio risultati non verificabile (anche pagina vuota): monitor sospeso. Testo letto: «${summary.replace(Regex("$S+"), " ").trim().take(200)}»")
+        val count = match ?: error("Conteggio risultati non verificabile: monitor sospeso. Testo letto: «${summary.replace(Regex("$S+"), " ").trim().take(200)}»")
         val (start, end, total) = count.groupValues.drop(1).map { it.replace(".", "").toLongOrNull() ?: -1L }
         val items = box.findAll(".vvp-item-tile").map { tile ->
             val id = asin(tile.find("[data-asin]")?.attr("data-asin"))

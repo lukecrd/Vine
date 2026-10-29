@@ -1,4 +1,4 @@
-﻿package it.vine.monitor;
+package it.vine.monitor;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.*;

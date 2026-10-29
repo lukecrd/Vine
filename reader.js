@@ -1,4 +1,4 @@
-﻿/* GET only. No clicks, submissions, cart/order APIs, or page script execution. */
+/* GET only. No clicks, submissions, cart/order APIs, or page script execution. */
 let wakeLock = null;
 async function keepPageAwake(active) {
   try {

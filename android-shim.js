@@ -1,4 +1,4 @@
-﻿if (typeof AndroidBridge !== 'undefined') {
+if (typeof AndroidBridge !== 'undefined') {
   const listeners = [];
   window.chrome = {
     storage: { onChanged: { addListener: fn => listeners.push(fn) } },

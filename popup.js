@@ -1,4 +1,4 @@
-﻿const $=id=>document.getElementById(id);
+const $=id=>document.getElementById(id);
 let currentState=null;
 function formatCountdown(nextScan,running){
   if(!running||!nextScan)return '—';

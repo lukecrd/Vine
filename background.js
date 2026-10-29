@@ -1,4 +1,4 @@
-﻿importScripts('core.js');
+importScripts('core.js');
 const ALARM = 'vine-60s';
 let chain = Promise.resolve();
 function serial(fn) { const task = chain.then(fn); chain = task.catch(()=>{}); return task; }

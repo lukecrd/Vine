@@ -1,4 +1,4 @@
-﻿package it.vine.monitor;
+package it.vine.monitor;
 import android.app.*;
 import android.content.Intent;
 import android.os.*;

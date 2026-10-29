@@ -11,6 +11,8 @@ async function state() {
     events: [],
     scanMode: 'fixed',
     notifMode: 'sound',
+    soundType: 'chime',
+    soundVolume: 80,
     nextScan: null,
     status: 'Pronto. Avvia per creare la baseline silenziosa.'
   };
@@ -18,7 +20,6 @@ async function state() {
 
 function nextDelayMinutes(scanMode) {
   if (scanMode === 'random') {
-    // Casuale tra 1 e 3 minuti (60 - 180 secondi)
     const secs = Math.floor(60 + Math.random() * 121);
     return secs / 60;
   }
@@ -136,6 +137,8 @@ chrome.runtime.onMessage.addListener((msg, sender, reply) => {
       const s = await state();
       if (msg.scanMode) s.scanMode = msg.scanMode;
       if (msg.notifMode) s.notifMode = msg.notifMode;
+      if (msg.soundType) s.soundType = msg.soundType;
+      if (msg.soundVolume) s.soundVolume = msg.soundVolume;
       if (s.running && msg.scanMode) await scheduleNextAlarm(s);
       await save(s);
     }
@@ -147,6 +150,8 @@ chrome.runtime.onMessage.addListener((msg, sender, reply) => {
       const s = await state();
       if (msg.scanMode) s.scanMode = msg.scanMode;
       if (msg.notifMode) s.notifMode = msg.notifMode;
+      if (msg.soundType) s.soundType = msg.soundType;
+      if (msg.soundVolume) s.soundVolume = msg.soundVolume;
       s.running = true;
       s.tabId = tab.id;
       s.status = 'Lettura in corso…';

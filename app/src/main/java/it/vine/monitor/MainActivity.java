@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.app.*;
 import android.content.*;
 import android.content.pm.PackageManager;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.*;
 import android.provider.Settings;
@@ -37,6 +39,7 @@ public class MainActivity extends Activity {
         uiWebView = new WebView(this);
         uiWebView.getSettings().setJavaScriptEnabled(true);
         uiWebView.getSettings().setAllowFileAccess(true);
+        uiWebView.getSettings().setMediaPlaybackRequiresUserGesture(false);
         uiWebView.addJavascriptInterface(new Bridge(), "AndroidBridge");
 
         amazonWebView = new WebView(this);
@@ -47,8 +50,8 @@ public class MainActivity extends Activity {
         amazonWebView.setWebViewClient(new WebViewClient());
         amazonWebView.loadUrl("https://www.amazon.it/vine/vine-items?queue=potluck");
 
-        layout.addView(uiWebView, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 0.52f));
-        layout.addView(amazonWebView, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 0.48f));
+        layout.addView(uiWebView, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 0.54f));
+        layout.addView(amazonWebView, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 0.46f));
         setContentView(layout);
 
         uiWebView.loadUrl("file:///android_asset/popup.html");
@@ -56,7 +59,7 @@ public class MainActivity extends Activity {
             @Override
             public void onPageFinished(WebView view, String url) {
                 String bgRunner =
-                    "window.__state = Object.assign({running:false,baseline:false,seen:{},events:[],scanMode:'fixed',notifMode:'sound',nextScan:null,status:'Pronto. Avvia per creare la baseline silenziosa.'}, JSON.parse(AndroidBridge.loadState() || '{}'));" +
+                    "window.__state = Object.assign({running:false,baseline:false,seen:{},events:[],scanMode:'fixed',notifMode:'sound',soundType:'chime',soundVolume:80,nextScan:null,status:'Pronto. Avvia per creare la baseline silenziosa.'}, JSON.parse(AndroidBridge.loadState() || '{}'));" +
                     "window.__state.running = false; window.__state.nextScan = null;" +
                     "window.__timer = null;" +
                     "window.__save = function() { AndroidBridge.saveState(JSON.stringify(window.__state)); window.__notifyStateUpdate(window.__state); };" +
@@ -113,6 +116,13 @@ public class MainActivity extends Activity {
             Intent svc = new Intent(MainActivity.this, KeepAliveService.class);
             if (active) startForegroundService(svc); else stopService(svc);
         }
+        @JavascriptInterface public void playSystemSound() {
+            try {
+                Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                Ringtone rt = RingtoneManager.getRingtone(MainActivity.this, uri);
+                if (rt != null) rt.play();
+            } catch (Exception ignored) {}
+        }
         @JavascriptInterface public void notifyProduct(String id, String title, String url) {
             PendingIntent pi = PendingIntent.getActivity(MainActivity.this, id.hashCode(), new Intent(Intent.ACTION_VIEW, Uri.parse(url)), PendingIntent.FLAG_IMMUTABLE);
             Notification n = new Notification.Builder(MainActivity.this, ALERT_CHANNEL)
@@ -130,10 +140,14 @@ public class MainActivity extends Activity {
                 String type = msg.optString("type", "status");
                 String scanMode = msg.optString("scanMode", "");
                 String notifMode = msg.optString("notifMode", "");
+                String soundType = msg.optString("soundType", "");
+                int soundVolume = msg.optInt("soundVolume", 0);
                 handler.post(() -> {
                     String updateCfg = "";
                     if (!scanMode.isEmpty()) updateCfg += "window.__state.scanMode='" + scanMode + "';";
                     if (!notifMode.isEmpty()) updateCfg += "window.__state.notifMode='" + notifMode + "';";
+                    if (!soundType.isEmpty()) updateCfg += "window.__state.soundType='" + soundType + "';";
+                    if (soundVolume > 0) updateCfg += "window.__state.soundVolume=" + soundVolume + ";";
                     if ("config".equals(type)) {
                         uiWebView.evaluateJavascript(updateCfg + "if(window.__state.running) window.__scheduleNext(); window.__save();", null);
                     } else if ("start".equals(type)) {
@@ -147,7 +161,7 @@ public class MainActivity extends Activity {
                     }
                 });
             } catch (Exception ignored) {}
-            String saved = prefs.getString("state_json", "{\"running\":false,\"baseline\":false,\"seen\":{},\"events\":[],\"scanMode\":\"fixed\",\"notifMode\":\"sound\",\"nextScan\":null,\"status\":\"Pronto.\"}");
+            String saved = prefs.getString("state_json", "{\"running\":false,\"baseline\":false,\"seen\":{},\"events\":[],\"scanMode\":\"fixed\",\"notifMode\":\"sound\",\"soundType\":\"chime\",\"soundVolume\":80,\"nextScan\":null,\"status\":\"Pronto.\"}");
             return "{\"ok\":true,\"state\":" + saved + "}";
         }
         @JavascriptInterface public void scanAmazonPage() {

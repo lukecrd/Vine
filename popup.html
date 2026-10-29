@@ -10,12 +10,30 @@
       <option value="random">Casuale (tra 1 e 3 minuti)</option>
     </select>
   </label>
-  <label>Impostazione notifiche
+
+  <label>Notifiche
     <select id="notifMode">
       <option value="sound">Attive + Suono avviso</option>
-      <option value="system">Attive (notifica standard)</option>
+      <option value="system">Solo notifica silenziosa</option>
       <option value="off">Disattivate (solo registro)</option>
     </select>
+  </label>
+
+  <label>Suono notifica
+    <select id="soundType">
+      <option value="chime">Campanello (Ding-Dong)</option>
+      <option value="beep">Doppio Beep veloce</option>
+      <option value="alarm">Allarme Forte (3 toni)</option>
+      <option value="melody">Melodia Dolce</option>
+      <option value="device">Suono predefinito telefono</option>
+    </select>
+  </label>
+
+  <label>Volume suono (<span id="volLabel">80%</span>)
+    <div class="sound-row">
+      <input type="range" id="soundVolume" min="10" max="100" step="10" value="80" style="flex:1">
+      <button type="button" id="testSound" class="secondary">🔊 Prova</button>
+    </div>
   </label>
 </div>
 

@@ -9,6 +9,7 @@ import android.os.*;
 import android.provider.Settings;
 import android.webkit.*;
 import android.widget.LinearLayout;
+import org.json.JSONObject;
 
 public class MainActivity extends Activity {
     private WebView uiWebView, amazonWebView;
@@ -46,8 +47,8 @@ public class MainActivity extends Activity {
         amazonWebView.setWebViewClient(new WebViewClient());
         amazonWebView.loadUrl("https://www.amazon.it/vine/vine-items?queue=potluck");
 
-        layout.addView(uiWebView, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 0.48f));
-        layout.addView(amazonWebView, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 0.52f));
+        layout.addView(uiWebView, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 0.52f));
+        layout.addView(amazonWebView, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 0.48f));
         setContentView(layout);
 
         uiWebView.loadUrl("file:///android_asset/popup.html");
@@ -55,13 +56,22 @@ public class MainActivity extends Activity {
             @Override
             public void onPageFinished(WebView view, String url) {
                 String bgRunner =
-                    "window.__state = JSON.parse(AndroidBridge.loadState() || '{\"running\":false,\"baseline\":false,\"seen\":{},\"events\":[],\"nextScan\":null,\"status\":\"Pronto. Avvia per creare la baseline silenziosa.\"}');" +
+                    "window.__state = Object.assign({running:false,baseline:false,seen:{},events:[],scanMode:'fixed',notifMode:'sound',nextScan:null,status:'Pronto. Avvia per creare la baseline silenziosa.'}, JSON.parse(AndroidBridge.loadState() || '{}'));" +
                     "window.__state.running = false; window.__state.nextScan = null;" +
                     "window.__timer = null;" +
                     "window.__save = function() { AndroidBridge.saveState(JSON.stringify(window.__state)); window.__notifyStateUpdate(window.__state); };" +
+                    "window.__nextDelayMs = function() {" +
+                    "  return window.__state.scanMode === 'random' ? Math.floor(60000 + Math.random() * 120000) : 60000;" +
+                    "};" +
+                    "window.__scheduleNext = function() {" +
+                    "  clearTimeout(window.__timer);" +
+                    "  if (!window.__state.running) { window.__state.nextScan = null; return; }" +
+                    "  const ms = window.__nextDelayMs();" +
+                    "  window.__state.nextScan = Date.now() + ms;" +
+                    "  window.__timer = setTimeout(window.__triggerScan, ms);" +
+                    "};" +
                     "window.__triggerScan = function() {" +
                     "  if (!window.__state.running) return;" +
-                    "  window.__state.nextScan = Date.now() + 60000; window.__save();" +
                     "  AndroidBridge.scanAmazonPage();" +
                     "};" +
                     "window.onScanRawResult = function(raw) {" +
@@ -73,15 +83,20 @@ public class MainActivity extends Activity {
                     "    window.__state = VineCore.reconcile(window.__state, snap.items, Date.now());" +
                     "    const fresh = window.__state.fresh; delete window.__state.fresh;" +
                     "    window.__state.status = wasBase ? 'Attivo — ultima scansione completata.' : 'Attivo — baseline silenziosa salvata.';" +
+                    "    window.__scheduleNext();" +
                     "    window.__save();" +
-                    "    for (const it of fresh) AndroidBridge.notifyProduct(it.id, it.title, it.url);" +
+                    "    if ((window.__state.notifMode || 'sound') !== 'off') {" +
+                    "      for (const it of fresh) AndroidBridge.notifyProduct(it.id, it.title, it.url);" +
+                    "    }" +
                     "  } catch(e) {" +
                     "    if (/CAPTCHA|Accesso|Sessione scaduta/i.test(e.message)) {" +
-                    "      window.__state.running = false; window.__state.nextScan = null; clearInterval(window.__timer);" +
+                    "      window.__state.running = false; window.__state.nextScan = null; clearTimeout(window.__timer);" +
                     "      AndroidBridge.setServiceActive(false);" +
                     "      window.__state.status = 'Sospeso: ' + e.message; window.__save();" +
                     "    } else {" +
-                    "      window.__state.status = 'In attesa (standby/rete): ' + e.message + ' — Riprovo al prossimo ciclo.'; window.__save();" +
+                    "      window.__state.status = 'In attesa (standby/rete): ' + e.message + ' — Riprovo al prossimo ciclo.';" +
+                    "      window.__scheduleNext();" +
+                    "      window.__save();" +
                     "    }" +
                     "  }" +
                     "};" +
@@ -109,19 +124,30 @@ public class MainActivity extends Activity {
                     .build();
             getSystemService(NotificationManager.class).notify(id.hashCode(), n);
         }
-        @JavascriptInterface public String handleMessage(String type) {
-            handler.post(() -> {
-                if ("start".equals(type)) {
-                    setServiceActive(true);
-                    uiWebView.evaluateJavascript("window.__state.running=true; window.__state.status='Lettura in corso…'; clearInterval(window.__timer); window.__timer=setInterval(window.__triggerScan,60000); window.__triggerScan();", null);
-                } else if ("stop".equals(type)) {
-                    setServiceActive(false);
-                    uiWebView.evaluateJavascript("window.__state.running=false; window.__state.nextScan=null; clearInterval(window.__timer); window.__state.status='Fermo — memoria dei prodotti conservata.'; window.__save();", null);
-                } else {
-                    uiWebView.evaluateJavascript("if(window.__state) window.__notifyStateUpdate(window.__state);", null);
-                }
-            });
-            String saved = prefs.getString("state_json", "{\"running\":false,\"baseline\":false,\"seen\":{},\"events\":[],\"nextScan\":null,\"status\":\"Pronto.\"}");
+        @JavascriptInterface public String handleMessage(String rawJson) {
+            try {
+                JSONObject msg = new JSONObject(rawJson);
+                String type = msg.optString("type", "status");
+                String scanMode = msg.optString("scanMode", "");
+                String notifMode = msg.optString("notifMode", "");
+                handler.post(() -> {
+                    String updateCfg = "";
+                    if (!scanMode.isEmpty()) updateCfg += "window.__state.scanMode='" + scanMode + "';";
+                    if (!notifMode.isEmpty()) updateCfg += "window.__state.notifMode='" + notifMode + "';";
+                    if ("config".equals(type)) {
+                        uiWebView.evaluateJavascript(updateCfg + "if(window.__state.running) window.__scheduleNext(); window.__save();", null);
+                    } else if ("start".equals(type)) {
+                        setServiceActive(true);
+                        uiWebView.evaluateJavascript(updateCfg + "window.__state.running=true; window.__state.status='Lettura in corso…'; window.__save(); window.__triggerScan();", null);
+                    } else if ("stop".equals(type)) {
+                        setServiceActive(false);
+                        uiWebView.evaluateJavascript("window.__state.running=false; window.__state.nextScan=null; clearTimeout(window.__timer); window.__state.status='Fermo — memoria dei prodotti conservata.'; window.__save();", null);
+                    } else {
+                        uiWebView.evaluateJavascript("if(window.__state) window.__notifyStateUpdate(window.__state);", null);
+                    }
+                });
+            } catch (Exception ignored) {}
+            String saved = prefs.getString("state_json", "{\"running\":false,\"baseline\":false,\"seen\":{},\"events\":[],\"scanMode\":\"fixed\",\"notifMode\":\"sound\",\"nextScan\":null,\"status\":\"Pronto.\"}");
             return "{\"ok\":true,\"state\":" + saved + "}";
         }
         @JavascriptInterface public void scanAmazonPage() {

@@ -4,7 +4,7 @@ if (typeof AndroidBridge !== 'undefined') {
     storage: { onChanged: { addListener: fn => listeners.push(fn) } },
     runtime: {
       sendMessage: async (msg) => {
-        const res = JSON.parse(AndroidBridge.handleMessage(msg.type));
+        const res = JSON.parse(AndroidBridge.handleMessage(JSON.stringify(msg)));
         if (res.ok) listeners.forEach(fn => fn({state: {newValue: res.state}}));
         return res;
       }

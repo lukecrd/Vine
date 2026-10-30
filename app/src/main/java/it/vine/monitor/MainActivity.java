@@ -47,6 +47,7 @@ public class MainActivity extends Activity {
         amazonWebView.getSettings().setDomStorageEnabled(true);
         CookieManager.getInstance().setAcceptCookie(true);
         CookieManager.getInstance().setAcceptThirdPartyCookies(amazonWebView, true);
+        amazonWebView.addJavascriptInterface(new ScanBridge(), "ScanBridge");
         amazonWebView.setWebViewClient(new WebViewClient());
         amazonWebView.loadUrl("https://www.amazon.it/vine/vine-items?queue=potluck");
 
@@ -165,10 +166,17 @@ public class MainActivity extends Activity {
             return "{\"ok\":true,\"state\":" + saved + "}";
         }
         @JavascriptInterface public void scanAmazonPage() {
+            // evaluateJavascript does not await Promises: the result comes back via ScanBridge.result
             handler.post(() -> {
-                String js = "(async function(){try{const r=await fetch('https://www.amazon.it/vine/vine-items?queue=potluck',{credentials:'same-origin',cache:'no-store'});return JSON.stringify({ok:true,url:r.url,html:await r.text()});}catch(e){return JSON.stringify({ok:false,error:e.message});}})()";
-                amazonWebView.evaluateJavascript(js, res -> uiWebView.evaluateJavascript("window.onScanRawResult(" + res + ");", null));
+                String js = "(async function(){let out;try{const r=await fetch('https://www.amazon.it/vine/vine-items?queue=potluck',{credentials:'same-origin',cache:'no-store'});out={ok:true,url:r.url,html:await r.text()};}catch(e){out={ok:false,error:e.message};}ScanBridge.result(JSON.stringify(out));})();";
+                amazonWebView.evaluateJavascript(js, null);
             });
+        }
+    }
+
+    public class ScanBridge {
+        @JavascriptInterface public void result(String json) {
+            handler.post(() -> uiWebView.evaluateJavascript("window.onScanRawResult(" + JSONObject.quote(json) + ");", null));
         }
     }
 }
